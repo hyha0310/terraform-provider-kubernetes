@@ -326,6 +326,8 @@ func (s *RawProviderServer) PlanResourceChange(ctx context.Context, req *tfproto
 	// Transform the input manifest to adhere to the type model from the OpenAPI spec
 	morphedManifest, err := morph.ValueToType(ppMan, objectType, tftypes.NewAttributePath())
 	if err != nil {
+		s.logger.Debug("[CustomDebugMessage/plan.go]", "ProposedManifest", dump(ppMan))
+		s.logger.Debug("[CustomDebugMessage/plan.go]", "ObjectType", dump(objectType))
 		resp.Diagnostics = append(resp.Diagnostics, &tfprotov5.Diagnostic{
 			Severity: tfprotov5.DiagnosticSeverityError,
 			Summary:  "Failed to morph manifest to OAPI type",

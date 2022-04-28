@@ -88,6 +88,8 @@ func (s *RawProviderServer) UpgradeResourceState(ctx context.Context, req *tfpro
 
 	morphedObject, err := morph.ValueToType(obj, tsch, tftypes.NewAttributePath())
 	if err != nil {
+		s.logger.Debug("[CustomDebugMessage/upgrade_state.go]", "ProposedManifest", dump(obj))
+		s.logger.Debug("[CustomDebugMessage/upgrade_state.go]", "ObjectType", dump(tsch))
 		resp.Diagnostics = append(resp.Diagnostics, &tfprotov5.Diagnostic{
 			Severity: tfprotov5.DiagnosticSeverityError,
 			Summary:  "Failed to morph manifest to OAPI type",
